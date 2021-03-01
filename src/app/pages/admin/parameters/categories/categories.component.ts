@@ -12,10 +12,9 @@ const { server } = environment;
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styles: []
+  styles: [],
 })
 export class CategoriesComponent implements OnInit {
-
   public categories: ICategory[];
   public isLoading: boolean;
   public urlImage = server;
@@ -27,11 +26,13 @@ export class CategoriesComponent implements OnInit {
     private storage: StorageService,
     private router: Router
   ) {
-    this.loading.isLoading.subscribe(isLoading => this.isLoading = isLoading);
+    this.loading.isLoading.subscribe(
+      (isLoading) => (this.isLoading = isLoading)
+    );
   }
 
   ngOnInit(): void {
-    this.api.all('categories').subscribe(categories => {
+    this.api.all('categories').subscribe((categories) => {
       this.categories = categories;
     });
   }
@@ -47,12 +48,11 @@ export class CategoriesComponent implements OnInit {
 
   delete(id: number): void {
     this.api.delete(`categories/${id}`).subscribe(() => {
-      this.categories.map(item => {
+      this.categories.map((item) => {
         if (item.id === id) {
           item.status = false;
         }
       });
     });
   }
-
 }

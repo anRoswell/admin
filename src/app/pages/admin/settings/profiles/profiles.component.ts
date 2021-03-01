@@ -7,24 +7,26 @@ import { LoadingService } from './../../../../services/loading.service';
 @Component({
   selector: 'app-profiles',
   templateUrl: './profiles.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class ProfilesComponent implements OnInit {
-
   public data: any;
   public profile: any;
   public isLoading: boolean;
+
   constructor(
     private api: ApiService,
     private storage: StorageService,
     private router: Router,
     private loading: LoadingService
   ) {
-    this.loading.isLoading.subscribe(isLoading => this.isLoading = isLoading);
+    this.loading.isLoading.subscribe(
+      (isLoading) => (this.isLoading = isLoading)
+    );
   }
 
   ngOnInit(): void {
-    this.api.all('profiles').subscribe(profiles => {
+    this.api.all('profiles').subscribe((profiles) => {
       this.data = profiles;
     });
     this.storage.destroy('__profile');
@@ -40,13 +42,12 @@ export class ProfilesComponent implements OnInit {
   }
 
   delete(id: number): void {
-    this.api.delete(`profiles/${id}`).subscribe(response => {
-      this.data.map(item => {
+    this.api.delete(`profiles/${id}`).subscribe((response) => {
+      this.data.map((item) => {
         if (item.id === id) {
           item.status = 0;
         }
       });
     });
   }
-
 }
